@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ML" Version="1.6.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Datasets\training_dataset.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup Label="SentimentAnalysisModel">
+    <None Include="SentimentAnalysisModel.consumption.cs">
+      <DependentUpon>SentimentAnalysisModel.mbconfig</DependentUpon>
+    </None>
+    <None Include="SentimentAnalysisModel.training.cs">
+      <DependentUpon>SentimentAnalysisModel.mbconfig</DependentUpon>
+    </None>
+    <None Include="SentimentAnalysisModel.zip">
+      <DependentUpon>SentimentAnalysisModel.mbconfig</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>
