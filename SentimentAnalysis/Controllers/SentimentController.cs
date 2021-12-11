@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SentimentAnalysis.ErrorHandling;
 using System;
 using System.Net;
 
@@ -10,30 +11,32 @@ namespace SentimentAnalysis.Controllers
     public class SentimentController : ControllerBase
     {
         /// <summary>
-        /// Проанализировать тональность отзыва
+        /// Проанализировать тональность текста
         /// </summary>
-        /// <param name="inputText">Текст отзыва</param>
+        /// <param name="inputText">Текст для анализа</param>
         /// <returns></returns>
-        [HttpGet]
+        /// <response code = "200">Получить результат</response>
+        /// <response code = "400">Передана пустая строка</response>
+        /// <response code = "500">Произошла внутренняя ошибка сервера</response>
+        [HttpGet("{inputText}")]
         [ProducesResponseType(typeof(SentimentAnalysisModel.ModelOutput), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
-        public ActionResult Get(string inputText)
+        [ProducesResponseType(typeof(Error), (int)HttpStatusCode.InternalServerError)]
+        public ActionResult PredictReviewSentiment([FromRoute] string inputText)
         {
+            if (string.IsNullOrEmpty(inputText))
+            {
+                return BadRequest("Input text is null or empty");
+            }
+
             var input = new SentimentAnalysisModel.ModelInput
             {
                 Review = inputText
             };
 
-            try
-            {
-                var prediction = SentimentAnalysisModel.Predict(input);
+            var prediction = SentimentAnalysisModel.Predict(input);
 
-                return Ok(prediction);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(prediction);
         }
     }
 }
