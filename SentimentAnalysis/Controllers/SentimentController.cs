@@ -20,7 +20,7 @@ namespace SentimentAnalysis.Controllers
         [ProducesResponseType(typeof(SentimentAnalysisModel.ModelOutput), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(Error), (int)HttpStatusCode.InternalServerError)]
-        public ActionResult PredictReviewSentiment([FromRoute] string inputText)
+        public ActionResult GetSentiment([FromRoute] string inputText)
         {
             if (string.IsNullOrEmpty(inputText))
             {
