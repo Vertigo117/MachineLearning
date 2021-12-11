@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using SentimentAnalysis.ErrorHandling;
+using SentimentAnalysis.Extensions;
 using System.IO;
 
 namespace SentimentAnalysis
@@ -35,7 +35,7 @@ namespace SentimentAnalysis
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseMiddleware<ErrorHandlingMiddlware>();
+            app.UseCustomErrorHandling();
 
             app.UseSwagger();
 
