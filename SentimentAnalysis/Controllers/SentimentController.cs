@@ -12,8 +12,8 @@ namespace SentimentAnalysis.Controllers
         /// Проанализировать тональность текста
         /// </summary>
         /// <param name="inputText">Текст для анализа</param>
-        /// <returns></returns>
-        /// <response code = "200">Получить результат</response>
+        /// <returns>Результат анализа</returns>
+        /// <response code = "200">Успешный результат</response>
         /// <response code = "400">Передана пустая строка</response>
         /// <response code = "500">Произошла внутренняя ошибка сервера</response>
         [HttpGet("{inputText}")]
