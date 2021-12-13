@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ImageClassification.Extensions;
+using System.IO;
+using System.Reflection;
 
 namespace ImageClassification
 {
@@ -35,6 +37,10 @@ namespace ImageClassification
 
                 c.ResolveConflictingActions(x => x.First());
                 c.OperationFilter<FileOperationFilter>();
+
+                var aplicationName = Assembly.GetExecutingAssembly().GetName().Name;
+                var filePath = Path.Combine(AppContext.BaseDirectory, $"{aplicationName}.xml");
+                c.IncludeXmlComments(filePath);
             });
         }
 
