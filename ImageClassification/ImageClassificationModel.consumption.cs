@@ -5,60 +5,33 @@ using System;
 using System.Linq;
 using System.IO;
 using System.Collections.Generic;
+using ImageClassification.Models;
+
 namespace ImageClassification
 {
     public partial class ImageClassificationModel
     {
-        /// <summary>
-        /// model input class for ImageClassificationModel.
-        /// </summary>
-        #region model input class
-        public class ModelInput
-        {
-            [ColumnName(@"Label")]
-            public string Label { get; set; }
-
-            [ColumnName(@"ImageSource")]
-            public string ImageSource { get; set; }
-
-        }
-
-        #endregion
-
-        /// <summary>
-        /// model output class for ImageClassificationModel.
-        /// </summary>
-        #region model output class
-        public class ModelOutput
-        {
-            [ColumnName("PredictedLabel")]
-            public string Prediction { get; set; }
-
-            public float[] Score { get; set; }
-        }
-
-        #endregion
 
         private static string MLNetModelPath = Path.GetFullPath("ImageClassificationModel.zip");
 
-        public static readonly Lazy<PredictionEngine<ModelInput, ModelOutput>> PredictEngine = new Lazy<PredictionEngine<ModelInput, ModelOutput>>(() => CreatePredictEngine(), true);
+        public static readonly Lazy<PredictionEngine<Input, Output>> PredictEngine = new Lazy<PredictionEngine<Input, Output>>(() => CreatePredictEngine(), true);
 
         /// <summary>
-        /// Use this method to predict on <see cref="ModelInput"/>.
+        /// Use this method to predict on <see cref="Input"/>.
         /// </summary>
         /// <param name="input">model input.</param>
-        /// <returns><seealso cref=" ModelOutput"/></returns>
-        public static ModelOutput Predict(ModelInput input)
+        /// <returns><seealso cref=" Output"/></returns>
+        public static Output Predict(Input input)
         {
             var predEngine = PredictEngine.Value;
             return predEngine.Predict(input);
         }
 
-        private static PredictionEngine<ModelInput, ModelOutput> CreatePredictEngine()
+        private static PredictionEngine<Input, Output> CreatePredictEngine()
         {
             var mlContext = new MLContext();
             ITransformer mlModel = mlContext.Model.Load(MLNetModelPath, out var _);
-            return mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(mlModel);
+            return mlContext.Model.CreatePredictionEngine<Input, Output>(mlModel);
         }
     }
 }

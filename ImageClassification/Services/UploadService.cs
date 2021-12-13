@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace ImageClassification.Services
 {
@@ -15,7 +16,7 @@ namespace ImageClassification.Services
             this.webHostEnvironment = webHostEnvironment;
         }
 
-        public string UploadFile(IFormFile file)
+        public async Task<string> UploadFileAsync(IFormFile file)
         {
             if (file != null)
             {
@@ -23,7 +24,8 @@ namespace ImageClassification.Services
 
                 using (var stream = new FileStream(path, FileMode.Create))
                 {
-                    file.CopyTo(stream);
+                    await file.CopyToAsync(stream);
+                    await stream.FlushAsync();
                 }
 
                 return path;

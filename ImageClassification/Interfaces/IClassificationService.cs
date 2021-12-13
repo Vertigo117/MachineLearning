@@ -1,9 +1,11 @@
-﻿using static ImageClassification.ImageClassificationModel;
+﻿using ImageClassification.Models;
+using System.Threading.Tasks;
+using static ImageClassification.ImageClassificationModel;
 
 namespace ImageClassification.Interfaces
 {
     public interface IClassificationService
     {
-        ModelOutput GetImageClassification(string imagePath);
+        Task<Output> GetImageClassificationAsync(string imagePath);
     }
 }
