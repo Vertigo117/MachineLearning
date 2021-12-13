@@ -1,6 +1,9 @@
-﻿using ImageClassification.Interfaces;
+﻿using ImageClassification.ErrorHandling;
+using ImageClassification.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using static ImageClassification.ImageClassificationModel;
 
 namespace ImageClassification.Controllers
 {
@@ -18,11 +21,13 @@ namespace ImageClassification.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(ModelOutput), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Error), (int)HttpStatusCode.InternalServerError)]
         public ActionResult Post([FromForm]IFormFile file)
         {
             string imagePath = uploadService.UploadFile(file);
 
-            ImageClassificationModel.ModelOutput output = classificationService.GetImageClassification(imagePath);
+            ModelOutput output = classificationService.GetImageClassification(imagePath);
 
             return Ok(output);
         }
