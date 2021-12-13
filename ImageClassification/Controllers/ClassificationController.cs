@@ -35,7 +35,7 @@ namespace ImageClassification.Controllers
         {
             string imagePath = await uploadService.UploadFileAsync(file);
 
-            Output output = await classificationService.GetImageClassificationAsync(imagePath);
+            Output output = await classificationService.ClassifyImageAsync(imagePath);
 
             return Ok(output);
         }

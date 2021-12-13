@@ -16,7 +16,7 @@ namespace ImageClassification.Services
             this.predictionEnginePool = predictionEnginePool;
         }
 
-        public async Task<Output> GetImageClassificationAsync(string imagePath)
+        public async Task<Output> ClassifyImageAsync(string imagePath)
         {
             var input = new Input
             {

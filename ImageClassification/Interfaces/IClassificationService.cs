@@ -6,6 +6,6 @@ namespace ImageClassification.Interfaces
 {
     public interface IClassificationService
     {
-        Task<Output> GetImageClassificationAsync(string imagePath);
+        Task<Output> ClassifyImageAsync(string imagePath);
     }
 }
