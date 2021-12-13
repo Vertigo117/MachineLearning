@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ImageClassification.Extensions;
 
 namespace ImageClassification
 {
@@ -25,11 +26,15 @@ namespace ImageClassification
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.RegisterServices();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ImageClassification", Version = "v1" });
+
+                c.ResolveConflictingActions(x => x.First());
+                c.OperationFilter<FileOperationFilter>();
             });
         }
 
