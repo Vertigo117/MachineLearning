@@ -21,6 +21,13 @@ namespace ImageClassification.Controllers
             this.classificationService = classificationService;
         }
 
+        /// <summary>
+        /// Загрузить и проанализировать картинку
+        /// </summary>
+        /// <param name="file">Картинка</param>
+        /// <returns>Классификация картинки</returns>
+        /// <response code="200">Успешный результат</response>
+        /// <response code="500">Внутренняя ошибка сервера</response>
         [HttpPost]
         [ProducesResponseType(typeof(Input), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(Error), (int)HttpStatusCode.InternalServerError)]
